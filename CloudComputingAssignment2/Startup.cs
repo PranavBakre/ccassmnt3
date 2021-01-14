@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Npgsql.EntityFrameworkCore;
 namespace CloudComputingAssignment2
 {
     public class Startup
@@ -27,10 +27,12 @@ namespace CloudComputingAssignment2
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<Data.AssignmentDbContext>(options => 
+            services.AddDbContext<Data.AssignmentDbContext>(options =>
             options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")
-                ));
+                )
+            //options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
+            );
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<AssignmentDbContext>();
